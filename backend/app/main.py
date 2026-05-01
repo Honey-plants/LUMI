@@ -1,9 +1,11 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.api.routes import auth
+
 app = FastAPI(
     title="LUMI API",
-    description="The Life sherpa LUMI의 백엔드 API",
+    description="LUMI의 백엔드 API",
     version="0.1.0",
 )
 
@@ -16,6 +18,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# 라우터 등록
+app.include_router(auth.router)
+
+
 @app.get("/health", tags=["상태 확인"])
 def health_check():
-    return {"status": "ok", "message": "LUMI 서버가 정상 동작 중입니다 🌙"}
+    return {"status": "ok", "message": "LUMI 서버가 정상 동작 중입니다"}
